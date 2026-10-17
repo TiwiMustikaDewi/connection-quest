@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Trophy,
@@ -34,7 +34,11 @@ export function LeaderboardPage() {
   const { language } = useLanguage();
   const { state } = useGame();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isIndo = language === 'id';
+
+  // Admin access protection: Developer/Admin settings only accessible via ?admin=true or ?admin=afl2026
+  const isAdmin = searchParams.get('admin') === 'true' || searchParams.get('admin') === 'afl2026';
 
   const [activeTab, setActiveTab] = useState('homegroup'); // 'homegroup' | 'individual'
   const [selectedHomegroupFilter, setSelectedHomegroupFilter] = useState('ALL');
@@ -247,25 +251,36 @@ export function LeaderboardPage() {
           <ArrowLeft className="w-4 h-4" />
         </button>
 
-        {/* Live Real-Time Status Pill (Cleaned: No Postgres mention) */}
-        <button
-          type="button"
-          onClick={() => setShowDbModal(true)}
-          className={`px-3 py-1 rounded-full text-xs font-bold border transition flex items-center gap-1.5 cursor-pointer shadow-2xs ${
-            isLivePostgres
-              ? 'bg-emerald-50 border-emerald-300 text-emerald-900 hover:bg-emerald-100'
-              : 'bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100'
-          }`}
-          title="Status Koneksi"
-        >
-          <span
-            className={`w-2 h-2 rounded-full ${
-              isLivePostgres ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
+        <div className="flex items-center gap-2">
+          {/* Live Real-Time Status Pill (Passive visual status for participants, non-clickable) */}
+          <div
+            className={`px-3 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 shadow-2xs select-none ${
+              isLivePostgres
+                ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                : 'bg-amber-50 border-amber-300 text-amber-900'
             }`}
-          />
-          <Radio className="w-3.5 h-3.5 text-emerald-600" />
-          <span>{isLivePostgres ? 'Live Real-Time' : isIndo ? 'Offline' : 'Offline'}</span>
-        </button>
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${
+                isLivePostgres ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
+              }`}
+            />
+            <Radio className="w-3.5 h-3.5 text-emerald-600" />
+            <span>{isLivePostgres ? 'Live Real-Time' : isIndo ? 'Offline' : 'Offline'}</span>
+          </div>
+
+          {/* Secret Developer / Admin Button: ONLY visible if ?admin=true is in URL */}
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setShowDbModal(true)}
+              className="px-2.5 py-1 rounded-full bg-rose-100 hover:bg-rose-200 border border-rose-300 text-rose-800 text-[11px] font-bold cursor-pointer transition shadow-2xs flex items-center gap-1"
+              title="Pengaturan Database Developer"
+            >
+              <span>⚙️ Dev</span>
+            </button>
+          )}
+        </div>
 
         <button
           type="button"
@@ -297,13 +312,15 @@ export function LeaderboardPage() {
             <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
             <span className="truncate">{dbError}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowDbModal(true)}
-            className="text-[11px] font-bold text-rose-800 underline shrink-0 cursor-pointer hover:text-rose-950"
-          >
-            {isIndo ? 'Periksa' : 'Check'}
-          </button>
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setShowDbModal(true)}
+              className="text-[11px] font-bold text-rose-800 underline shrink-0 cursor-pointer hover:text-rose-950"
+            >
+              {isIndo ? 'Periksa (Dev)' : 'Check (Dev)'}
+            </button>
+          )}
         </div>
       )}
 
@@ -574,12 +591,14 @@ export function LeaderboardPage() {
         </div>
       )}
 
-      {/* Database Config Modal */}
-      <DatabaseConfigModal
-        isOpen={showDbModal}
-        onClose={() => setShowDbModal(false)}
-        onConfigSaved={loadData}
-      />
+      {/* Database Config Modal - strictly protected for Admin/Developer only */}
+      {isAdmin && (
+        <DatabaseConfigModal
+          isOpen={showDbModal}
+          onClose={() => setShowDbModal(false)}
+          onConfigSaved={loadData}
+        />
+      )}
 
       {/* Scoring Formula Info Modal */}
       {showFormulaModal && (
