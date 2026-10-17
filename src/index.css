@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Quicksand', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  font-family: var(--font-sans);
+  background-color: #FFFDF9;
+  color: #1E293B;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.font-display {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+/* Connectopia ambient background */
+.bg-connectopia {
+  background-color: #FFFDF9;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(254, 240, 138, 0.45) 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(167, 243, 208, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(221, 214, 254, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 10% 75%, rgba(254, 215, 170, 0.3) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Cute Soft Shadows */
+.shadow-soft {
+  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-pastel {
+  box-shadow: 0 12px 30px -4px rgba(167, 139, 250, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-bouncy {
+  box-shadow: 0 6px 0px 0px rgba(217, 119, 6, 0.25);
+}
+
+/* Glassmorphism cute card */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+}
+
+/* ==================== FANTASY ANIMATED WORLD KEYFRAMES ==================== */
+
+/* Drifting clouds */
+@keyframes cloud-drift-slow {
+  0% { transform: translateX(-15%); }
+  100% { transform: translateX(115%); }
+}
+
+@keyframes cloud-drift-fast {
+  0% { transform: translateX(-25%); }
+  100% { transform: translateX(120%); }
+}
+
+.animate-cloud-slow {
+  animation: cloud-drift-slow 35s linear infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-drift-fast 22s linear infinite;
+}
+
+/* Gentle swaying branches / banners */
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.animate-sway {
+  transform-origin: top center;
+  animation: sway 4s ease-in-out infinite;
+}
+
+.animate-sway-slow {
+  transform-origin: top center;
+  animation: sway 6s ease-in-out infinite;
+}
+
+/* Floating fantasy balloon */
+@keyframes float-balloon {
+  0%, 100% { transform: translateY(0px) rotate(1.5deg); }
+  50% { transform: translateY(-14px) rotate(-1.5deg); }
+}
+
+.animate-float-balloon {
+  animation: float-balloon 5s ease-in-out infinite;
+}
+
+/* Firefly glow & drift */
+@keyframes firefly-glow {
+  0%, 100% { opacity: 0.2; transform: translate(0px, 0px) scale(0.8); }
+  50% { opacity: 0.95; transform: translate(6px, -12px) scale(1.3); }
+}
+
+.animate-firefly-1 {
+  animation: firefly-glow 3.5s ease-in-out infinite;
+}
+.animate-firefly-2 {
+  animation: firefly-glow 4.2s ease-in-out infinite 1.2s;
+}
+.animate-firefly-3 {
+  animation: firefly-glow 2.8s ease-in-out infinite 0.7s;
+}
+
+/* Falling gentle petals / leaves */
+@keyframes falling-leaf {
+  0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% { transform: translate(50px, 120px) rotate(180deg); opacity: 0; }
+}
+
+.animate-falling-leaf-1 {
+  animation: falling-leaf 6s ease-in-out infinite;
+}
+.animate-falling-leaf-2 {
+  animation: falling-leaf 7.5s ease-in-out infinite 2.5s;
+}
+.animate-falling-leaf-3 {
+  animation: falling-leaf 5.2s ease-in-out infinite 1s;
+}
+
+/* Cozy Chimney smoke puff */
+@keyframes smoke-puff {
+  0% { opacity: 0; transform: translateY(0px) scale(0.5); }
+  35% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-30px) scale(1.4); }
+}
+
+.animate-smoke-1 {
+  animation: smoke-puff 3.5s ease-out infinite;
+}
+.animate-smoke-2 {
+  animation: smoke-puff 3.5s ease-out infinite 1.8s;
+}
+
+/* Spinning windmill */
+@keyframes spin-windmill {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-windmill {
+  transform-origin: center center;
+  animation: spin-windmill 14s linear infinite;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
