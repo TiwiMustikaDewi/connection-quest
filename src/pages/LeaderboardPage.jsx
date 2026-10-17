@@ -32,7 +32,7 @@ import { onSupabaseConfigChange } from '../lib/supabase';
 
 export function LeaderboardPage() {
   const { language } = useLanguage();
-  const { state } = useGame();
+  const { state, resetGame } = useGame();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isIndo = language === 'id';
@@ -396,7 +396,11 @@ export function LeaderboardPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/prologue')}
+              onClick={() => {
+                sound.playSelect(state.soundEnabled);
+                resetGame();
+                navigate('/register');
+              }}
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 text-xs font-extrabold shadow-xs transition cursor-pointer"
             >
               {isIndo ? 'Mainkan Quest Sekarang' : 'Play Quest Now'}

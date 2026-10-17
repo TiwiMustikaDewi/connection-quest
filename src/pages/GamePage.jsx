@@ -32,8 +32,12 @@ export function GamePage() {
   const chapterMeta = CHAPTERS_META.find((c) => c.chapter === currentChapter) || CHAPTERS_META[0];
   const isInterlude = Boolean(currentScene?.isInterludeGame);
 
-
-  // Handler for advancing narrative dialogue
+  // Route Guard: Must register name & homegroup before playing
+  React.useEffect(() => {
+    if (!state.participant.name || !state.participant.homegroup) {
+      navigate('/register', { replace: true });
+    }
+  }, [state.participant.name, state.participant.homegroup, navigate]);
   const handleAdvanceScene = () => {
     if (!currentScene) return;
 

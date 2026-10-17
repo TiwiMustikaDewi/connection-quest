@@ -57,6 +57,13 @@ export function AvatarPage() {
   const [selectedId, setSelectedId] = useState(state.participant.avatarId || 'milo');
   const isIndo = language === 'id';
 
+  // Route Guard: Must register name & homegroup first
+  React.useEffect(() => {
+    if (!state.participant.name || !state.participant.homegroup) {
+      navigate('/register', { replace: true });
+    }
+  }, [state.participant.name, state.participant.homegroup, navigate]);
+
   const handleSelect = (id) => {
     sound.playSelect(state.soundEnabled);
     setSelectedId(id);

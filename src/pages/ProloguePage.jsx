@@ -16,6 +16,14 @@ export function ProloguePage() {
   const navigate = useNavigate();
 
   const isIndo = language === 'id';
+
+  // Route Guard: Enforce registration of name & homegroup
+  React.useEffect(() => {
+    if (!state.participant.name || !state.participant.homegroup) {
+      navigate('/register', { replace: true });
+    }
+  }, [state.participant.name, state.participant.homegroup, navigate]);
+
   const avatarName = state.participant.avatarId
     ? state.participant.avatarId.charAt(0).toUpperCase() + state.participant.avatarId.slice(1)
     : 'Milo';
