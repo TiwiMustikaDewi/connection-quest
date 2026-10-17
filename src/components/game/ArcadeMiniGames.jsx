@@ -13,11 +13,11 @@ export function StarCatcherMiniGame({ onComplete }) {
 
   const [collected, setCollected] = useState(0);
   const [stars, setStars] = useState([
-    { id: 1, x: 20, y: 30, icon: '⭐', label: 'Inisiatif' },
-    { id: 2, x: 75, y: 25, icon: '🎈', label: 'Ceria' },
-    { id: 3, x: 45, y: 55, icon: '🌟', label: 'Energi' },
-    { id: 4, x: 15, y: 70, icon: '🎉', label: 'Harmoni' },
-    { id: 5, x: 80, y: 65, icon: '✨', label: 'Semangat' },
+    { id: 1, x: 20, y: 30, icon: '⭐', labelId: 'Inisiatif', labelEn: 'Initiative' },
+    { id: 2, x: 75, y: 25, icon: '🎈', labelId: 'Ceria', labelEn: 'Joy' },
+    { id: 3, x: 45, y: 55, icon: '🌟', labelId: 'Energi', labelEn: 'Energy' },
+    { id: 4, x: 15, y: 70, icon: '🎉', labelId: 'Harmoni', labelEn: 'Harmony' },
+    { id: 5, x: 80, y: 65, icon: '✨', labelId: 'Semangat', labelEn: 'Spirit' },
   ]);
 
   const target = 5;
@@ -81,7 +81,7 @@ export function StarCatcherMiniGame({ onComplete }) {
               className="absolute -translate-x-1/2 -translate-y-1/2 p-2 rounded-2xl bg-amber-200/90 hover:bg-amber-300 border-2 border-amber-400 shadow-xs cursor-pointer active:scale-90 transition-transform flex flex-col items-center select-none"
             >
               <span className="text-xl">{star.icon}</span>
-              <span className="text-[9px] font-bold text-amber-950">{star.label}</span>
+              <span className="text-[9px] font-bold text-amber-950">{isIndo ? star.labelId : star.labelEn}</span>
             </motion.button>
           ))}
         </AnimatePresence>
@@ -97,7 +97,7 @@ export function StarCatcherMiniGame({ onComplete }) {
               {isIndo ? 'SEMANGAT FESTIVAL TERKUMPUL! 🎉' : 'FESTIVAL SPIRIT GATHERED! 🎉'}
             </h4>
             <p className="text-[11px] text-amber-900 font-medium">
-              {isIndo ? 'Piko melompat kegirangan!' : 'Piko is jumping with joy!'}
+              {isIndo ? 'Karakter melompat kegirangan!' : 'The mascot is jumping with joy!'}
             </p>
           </motion.div>
         )}

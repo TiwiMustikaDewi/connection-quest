@@ -772,7 +772,7 @@ export async function generateStoryCanvas({
   ctx.fillStyle = '#64748B';
   ctx.font = 'bold 22px system-ui, -apple-system, sans-serif';
   const cleanHg = String(participantHomegroup).replace(/^homegroup\s*/i, '');
-  ctx.fillText(`PESERTA • HOMEGROUP ${cleanHg}`, CONTENT_X, c1Y + 54);
+  ctx.fillText(`${isIndo ? 'PESERTA' : 'PARTICIPANT'} • HOMEGROUP ${cleanHg}`, CONTENT_X, c1Y + 54);
 
   // Participant Name (Big, Bold, Navy)
   ctx.fillStyle = '#0F172A';
@@ -787,7 +787,7 @@ export async function generateStoryCanvas({
   // Subtitle Quote (Slate Italic)
   ctx.fillStyle = '#475569';
   ctx.font = 'italic 500 22px system-ui, sans-serif';
-  ctx.fillText(`“${subtitle || 'Sosok Penjembatan & Pendengar Penuh Empati'}”`, CONTENT_X, c1Y + 188, CARD_W - 230);
+  ctx.fillText(`“${subtitle || (isIndo ? 'Sosok Penjembatan & Pendengar Penuh Empati' : 'A Bridge Builder & Empathetic Listener')}”`, CONTENT_X, c1Y + 188, CARD_W - 230);
 
   // ── CARD 2: Komitmen Tindakan 48 Jam (Two-column Target & Strategi) ───────
   const c2Y = 998;
@@ -835,7 +835,7 @@ export async function generateStoryCanvas({
   // Column 2: Strategi
   ctx.fillStyle = '#64748B';
   ctx.font = 'bold 18px system-ui, sans-serif';
-  ctx.fillText('Strategi', col2X + 36, c2Y + 152);
+  ctx.fillText(isIndo ? 'Strategi' : 'Strategy', col2X + 36, c2Y + 152);
   ctx.font = '26px sans-serif';
   ctx.fillText('💡', col2X, c2Y + 192);
   ctx.fillStyle = '#0F172A';
@@ -868,14 +868,14 @@ export async function generateStoryCanvas({
   ctx.fillText(strengths[0] || 'Active Listening', gridCol1 + 40, c3Y + 118, 290);
 
   drawCheckmarkBadge(ctx, gridCol2 + 14, c3Y + 110, 15);
-  ctx.fillText(strengths[1] || 'Empati & Validasi Rasa', gridCol2 + 40, c3Y + 118, 290);
+  ctx.fillText(strengths[1] || (isIndo ? 'Empati & Validasi Rasa' : 'Empathy & Validation'), gridCol2 + 40, c3Y + 118, 290);
 
   // Row 2
   drawCheckmarkBadge(ctx, gridCol1 + 14, c3Y + 168, 15);
-  ctx.fillText(strengths[2] || 'Adaptabilitas Komunikasi', gridCol1 + 40, c3Y + 176, 290);
+  ctx.fillText(strengths[2] || (isIndo ? 'Adaptabilitas Komunikasi' : 'Communication Adaptability'), gridCol1 + 40, c3Y + 176, 290);
 
   drawCheckmarkBadge(ctx, gridCol2 + 14, c3Y + 168, 15);
-  ctx.fillText(strengths[3] || 'Peredam Ketegangan', gridCol2 + 40, c3Y + 176, 290);
+  ctx.fillText(strengths[3] || (isIndo ? 'Peredam Ketegangan' : 'De-escalation'), gridCol2 + 40, c3Y + 176, 290);
 
   // ── CARD 4: Tag Instagram @ewaapeyek (Centered Clean Pill Banner) ─────────
   const c4Y = 1530;
@@ -899,7 +899,7 @@ export async function generateStoryCanvas({
 
   ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
   ctx.fillStyle = '#475569';
-  const prefixText = 'Tag Instagram ';
+  const prefixText = isIndo ? 'Tag Instagram ' : 'Tag on Instagram ';
   const prefixWidth = ctx.measureText(prefixText).width;
 
   ctx.font = '900 34px system-ui, -apple-system, sans-serif';

@@ -461,7 +461,7 @@ export function ArcadeBridgeCircuit({ onComplete, onSkip }) {
                   </div>
                   <div className="col-span-2">
                     <span className="text-slate-500">{isIndo ? 'Bonus Hubungan:' : 'Bond Bonus:'}</span>{' '}
-                    <span className="font-bold text-emerald-700">+2 Empati & +2 Adaptabilitas</span>
+                    <span className="font-bold text-emerald-700">{isIndo ? '+2 Empati & +2 Adaptabilitas' : '+2 Empathy & +2 Adaptability'}</span>
                   </div>
                 </div>
 
@@ -470,7 +470,7 @@ export function ArcadeBridgeCircuit({ onComplete, onSkip }) {
                     type="button"
                     onClick={handleReset}
                     className="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 cursor-pointer"
-                    title="Ulangi Puzzle"
+                    title={isIndo ? 'Ulangi Puzzle' : 'Retry Puzzle'}
                   >
                     <RotateCcw className="w-4 h-4" />
                   </button>
@@ -479,7 +479,7 @@ export function ArcadeBridgeCircuit({ onComplete, onSkip }) {
                     onClick={onComplete}
                     className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-extrabold text-xs shadow-md shadow-teal-500/40 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
                   >
-                    <span>{isIndo ? 'Lanjut ke Bab 3: Bengkel Bumi' : 'Continue to Chapter 3'}</span>
+                    <span>{isIndo ? 'Lanjut ke Bab 3: Bengkel Bumi' : 'Continue to Chapter 3: Bumi\'s Workshop'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

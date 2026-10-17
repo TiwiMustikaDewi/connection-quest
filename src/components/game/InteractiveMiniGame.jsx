@@ -185,7 +185,7 @@ export function BridgeMiniGame({ onComplete }) {
 
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="p-3 rounded-2xl bg-white border border-indigo-200 text-xs font-bold text-indigo-900">
-          🎵 Tim Musik
+          🎵 {isIndo ? 'Tim Musik' : 'Music Team'}
         </div>
 
         <motion.button
@@ -199,11 +199,13 @@ export function BridgeMiniGame({ onComplete }) {
               : 'bg-indigo-600 hover:bg-indigo-700 text-white animate-pulse'
           }`}
         >
-          {isBridged ? '🌉 TERHUBUNG HARMONI ✨' : '🤝 Satukan!'}
+          {isBridged
+            ? (isIndo ? '🌉 TERHUBUNG HARMONI ✨' : '🌉 HARMONY CONNECTED ✨')
+            : (isIndo ? '🤝 Satukan!' : '🤝 Unite!')}
         </motion.button>
 
         <div className="p-3 rounded-2xl bg-white border border-indigo-200 text-xs font-bold text-indigo-900">
-          🎨 Stan Warga
+          🎨 {isIndo ? 'Stan Warga' : 'Community Stalls'}
         </div>
       </div>
 

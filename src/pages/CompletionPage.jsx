@@ -649,16 +649,16 @@ export function CompletionPage() {
               </div>
               <div className="min-w-0 flex-1 space-y-0.5">
                 <span className="text-xs sm:text-sm font-bold text-slate-500 block uppercase tracking-wide">
-                  PESERTA • HOMEGROUP {String(participantHomegroup).replace(/^homegroup\s*/i, '')}
+                  {isIndo ? 'PESERTA' : 'PARTICIPANT'} • HOMEGROUP {String(participantHomegroup).replace(/^homegroup\s*/i, '')}
                 </span>
                 <h4 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight truncate">
                   {participantName}
                 </h4>
                 <p className="text-sm sm:text-base font-extrabold text-violet-600 leading-tight truncate">
-                  {endingData.titleId || endingData.titleEn}
+                  {isIndo ? endingData.titleId : (endingData.titleEn || endingData.titleId)}
                 </p>
                 <p className="text-xs sm:text-sm text-slate-500 font-medium italic truncate">
-                  “{endingData.subtitleId || endingData.subtitleEn}”
+                  “{isIndo ? endingData.subtitleId : (endingData.subtitleEn || endingData.subtitleId)}”
                 </p>
               </div>
               <span className="text-slate-300 text-3xl sm:text-4xl font-light shrink-0 select-none">›</span>
@@ -681,12 +681,12 @@ export function CompletionPage() {
                     <span className="text-xs font-semibold text-slate-500 block">Target</span>
                     <div className="flex items-center gap-1 font-bold text-slate-900 truncate text-xs sm:text-sm mt-0.5">
                       <span>📍</span>
-                      <span className="truncate">{reflection?.targetEnvironment || 'Organisasi Kampus'}</span>
+                      <span className="truncate">{reflection?.targetEnvironment || (isIndo ? 'Organisasi Kampus' : 'Campus Organization')}</span>
                     </div>
                   </div>
                   <div className="w-px h-8 bg-slate-200" />
                   <div className="flex-1 min-w-0">
-                    <span className="text-xs font-semibold text-slate-500 block">Strategi</span>
+                    <span className="text-xs font-semibold text-slate-500 block">{isIndo ? 'Strategi' : 'Strategy'}</span>
                     <div className="flex items-center gap-1 font-bold text-slate-900 truncate text-xs sm:text-sm mt-0.5">
                       <span>💡</span>
                       <span className="truncate">{reflection?.strategyToPractice || 'Active listening'}</span>
@@ -723,7 +723,8 @@ export function CompletionPage() {
             {/* Card 4: Tag Instagram @ewaapeyek (Clean Centered Pill) */}
             <div className="bg-[#EEF2FF] border border-indigo-100/80 rounded-2xl sm:rounded-3xl py-4 sm:py-5 px-6 shadow-xs text-center">
               <p className="text-sm sm:text-base font-bold text-slate-600">
-                Tag Instagram <span className="font-black text-slate-900">@ewaapeyek</span>
+                {isIndo ? 'Tag Instagram ' : 'Tag on Instagram '}
+                <span className="font-black text-slate-900">@ewaapeyek</span>
               </p>
             </div>
           </div>

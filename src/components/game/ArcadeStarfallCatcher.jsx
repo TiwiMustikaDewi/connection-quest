@@ -333,10 +333,10 @@ export function ArcadeStarfallCatcher({ onComplete, onSkip }) {
               </p>
 
               <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-700 bg-amber-50 p-2.5 rounded-2xl border border-amber-200">
-                <div>⭐ Bintang (+10)</div>
-                <div>💖 Hati (+15)</div>
-                <div>🎈 Balon (+20)</div>
-                <div className="text-rose-600">🌧️ Awan (-10)</div>
+                <div>⭐ {isIndo ? 'Bintang (+10)' : 'Star (+10)'}</div>
+                <div>💖 {isIndo ? 'Hati (+15)' : 'Heart (+15)'}</div>
+                <div>🎈 {isIndo ? 'Balon (+20)' : 'Balloon (+20)'}</div>
+                <div className="text-rose-600">🌧️ {isIndo ? 'Awan (-10)' : 'Cloud (-10)'}</div>
               </div>
 
               <div className="flex gap-2 pt-1">
@@ -408,7 +408,7 @@ export function ArcadeStarfallCatcher({ onComplete, onSkip }) {
                 </div>
                 <div>
                   <span className="text-slate-500">{isIndo ? 'Bonus Hubungan:' : 'Bond Bonus:'}</span>{' '}
-                  <span className="font-bold text-emerald-700">+2 Inisiatif</span>
+                  <span className="font-bold text-emerald-700">{isIndo ? '+2 Inisiatif' : '+2 Initiative'}</span>
                 </div>
               </div>
 
@@ -417,7 +417,7 @@ export function ArcadeStarfallCatcher({ onComplete, onSkip }) {
                   type="button"
                   onClick={startGame}
                   className="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 cursor-pointer"
-                  title="Main Lagi"
+                  title={isIndo ? 'Main Lagi' : 'Play Again'}
                 >
                   <RotateCcw className="w-4 h-4" />
                 </button>
@@ -426,7 +426,7 @@ export function ArcadeStarfallCatcher({ onComplete, onSkip }) {
                   onClick={onComplete}
                   className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-amber-950 font-extrabold text-xs shadow-md shadow-amber-400/40 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
                 >
-                  <span>{isIndo ? 'Lanjut ke Bab 2: Taman Lentera' : 'Continue to Chapter 2'}</span>
+                  <span>{isIndo ? 'Lanjut ke Bab 2: Taman Lentera' : 'Continue to Chapter 2: Lantern Grove'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

@@ -609,40 +609,48 @@ export function LeaderboardPage() {
               <div className="p-2.5 rounded-2xl bg-amber-50 border border-amber-200 space-y-0.5">
                 <div className="font-bold text-amber-900 flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-amber-600" />
-                  <span>1. ⏱️ Kecepatan & Fokus (Maks. 250 Poin)</span>
+                  <span>{isIndo ? '1. ⏱️ Kecepatan & Fokus (Maks. 250 Poin)' : '1. ⏱️ Speed & Focus (Max 250 Points)'}</span>
                 </div>
                 <p className="text-[11px] text-slate-500">
-                  Dihitung dari kecepatan dan ketepatan menyelesaikan misi visual novel tanpa menunda.
+                  {isIndo
+                    ? 'Dihitung dari kecepatan dan ketepatan menyelesaikan misi visual novel tanpa menunda.'
+                    : 'Calculated from completion speed and focus throughout the story quest.'}
                 </p>
               </div>
 
               <div className="p-2.5 rounded-2xl bg-sky-50 border border-sky-200 space-y-0.5">
                 <div className="font-bold text-sky-900 flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-sky-600" />
-                  <span>2. ⭐ Performa Arcade Mini-Games (Maks. 350 Poin)</span>
+                  <span>{isIndo ? '2. ⭐ Performa Arcade Mini-Games (Maks. 350 Poin)' : '2. ⭐ Arcade Mini-Game Mastery (Max 350 Points)'}</span>
                 </div>
                 <p className="text-[11px] text-slate-500">
-                  Hasil tangkapan bintang Starfall Catcher & efisiensi rotasi puzzle Lantern Bridge.
+                  {isIndo
+                    ? 'Hasil tangkapan bintang Starfall Catcher & efisiensi rotasi puzzle Lantern Bridge.'
+                    : 'Starfall Catcher high-score mastery & Lantern Bridge circuit rotation efficiency.'}
                 </p>
               </div>
 
               <div className="p-2.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-0.5">
                 <div className="font-bold text-emerald-900 flex items-center gap-1.5">
                   <Heart className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>3. 🌿 Keseimbangan Indikator Koneksi (Maks. 250 Poin)</span>
+                  <span>{isIndo ? '3. 🌿 Keseimbangan Indikator Koneksi (Maks. 250 Poin)' : '3. 🌿 Connection Indicator Balance (Max 250 Points)'}</span>
                 </div>
                 <p className="text-[11px] text-slate-500">
-                  Bobot kebijaksanaan dalam Inisiatif, Empati, Adaptabilitas, dan Autentisitas.
+                  {isIndo
+                    ? 'Bobot kebijaksanaan dalam Inisiatif, Empati, Adaptabilitas, dan Autentisitas.'
+                    : 'Balanced wisdom across Initiative, Empathy, Adaptability, and Authenticity.'}
                 </p>
               </div>
 
               <div className="p-2.5 rounded-2xl bg-rose-50 border border-rose-200 space-y-0.5">
                 <div className="font-bold text-rose-900 flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-rose-600" />
-                  <span>4. 🎯 Kualitas Komitmen CTA 48 Jam (Maks. 150 Poin)</span>
+                  <span>{isIndo ? '4. 🎯 Kualitas Komitmen CTA 48 Jam (Maks. 150 Poin)' : '4. 🎯 48-Hour CTA Pledge Quality (Max 150 Points)'}</span>
                 </div>
                 <p className="text-[11px] text-slate-500">
-                  Kedalaman janji aksi konkret, pemilihan strategi, dan target lingkungan nyata.
+                  {isIndo
+                    ? 'Kedalaman janji aksi konkret, pemilihan strategi, dan target lingkungan nyata.'
+                    : 'Actionable commitment depth, chosen strategy, and real-world environment target.'}
                 </p>
               </div>
             </div>

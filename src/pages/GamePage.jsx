@@ -118,7 +118,7 @@ export function GamePage() {
               type="button"
               onClick={() => setShowArcadeModal(true)}
               className="p-1.5 rounded-full bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 transition cursor-pointer shadow-xs"
-              title="Buka Game Arcade Kapan Saja"
+              title={isIndo ? 'Buka Game Arcade Kapan Saja' : 'Open Arcade Mini-Games'}
             >
               <Gamepad2 className="w-3.5 h-3.5" />
             </button>
