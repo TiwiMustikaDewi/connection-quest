@@ -129,7 +129,7 @@ function gameReducer(state, action) {
     case 'TOGGLE_SOUND': {
       const nextSound = action.payload?.soundEnabled ?? !state.soundEnabled;
       if (!nextSound) {
-        sound.stopBgm();
+        sound.stopBgm(true);
       } else {
         sound.init();
         sound.startBgm();

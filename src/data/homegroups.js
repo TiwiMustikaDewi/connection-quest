@@ -11,10 +11,10 @@ export const HOMEGROUP_OPTIONS = [
   'Homegroup 8',
   'Homegroup 9',
   'Homegroup 10',
-  'Homegroup 11',
   'Homegroup 12',
   'Homegroup 13',
   'Homegroup 14',
   'Homegroup 15',
   'Homegroup 16',
+  'Homegroup 17',
 ];

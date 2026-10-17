@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Sparkles, Gamepad2 } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
@@ -32,23 +32,6 @@ export function GamePage() {
   const chapterMeta = CHAPTERS_META.find((c) => c.chapter === currentChapter) || CHAPTERS_META[0];
   const isInterlude = Boolean(currentScene?.isInterludeGame);
 
-  // Auto-start fun background music on first user interaction (browser policy)
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (state.soundEnabled && !sound.isBgmPlaying) {
-        sound.startBgm();
-      }
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
-    };
-
-    window.addEventListener('click', handleFirstInteraction);
-    window.addEventListener('keydown', handleFirstInteraction);
-    return () => {
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
-    };
-  }, [state.soundEnabled]);
 
   // Handler for advancing narrative dialogue
   const handleAdvanceScene = () => {

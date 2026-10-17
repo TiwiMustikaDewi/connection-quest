@@ -12,14 +12,14 @@ export function AppLayout({ children }) {
   useEffect(() => {
     // Attempt immediate start
     sound.init();
-    if (state.soundEnabled && !sound.isBgmPlaying) {
+    if (state.soundEnabled && !sound.isBgmPlaying && !sound.userMutedBgm) {
       sound.startBgm();
     }
 
     // Modern browsers require a user interaction (tap/click/key) to unlock AudioContext
     const handleFirstInteraction = () => {
       sound.init();
-      if (state.soundEnabled && !sound.isBgmPlaying) {
+      if (state.soundEnabled && !sound.isBgmPlaying && !sound.userMutedBgm) {
         sound.startBgm();
       }
       window.removeEventListener('pointerdown', handleFirstInteraction);

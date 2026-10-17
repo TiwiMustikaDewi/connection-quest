@@ -5,6 +5,7 @@ class SoundEngine {
   constructor() {
     this.ctx = null;
     this.isBgmPlaying = false;
+    this.userMutedBgm = false;
     this.bgmVolume = 0.28;
     this.bgmGain = null;
     this.timerId = null;
@@ -16,14 +17,22 @@ class SoundEngine {
   }
 
   init() {
-    if (!this.ctx && typeof window !== 'undefined') {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) {
+    if (typeof window === 'undefined') return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    if (!this.ctx || this.ctx.state === 'closed') {
+      try {
         this.ctx = new AudioCtx();
+        this.bgmGain = null;
+      } catch (err) {
+        console.warn('AudioContext init error:', err);
+        return;
       }
     }
+
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
   }
 
@@ -46,24 +55,45 @@ class SoundEngine {
   // ==================== BGM INSTRUMENTAL SYNTHESIZER ====================
 
   startBgm() {
+    this.userMutedBgm = false;
     this.init();
-    if (!this.ctx) return;
-    if (this.isBgmPlaying) return;
+    if (!this.ctx || this.ctx.state === 'closed') return;
 
     if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
+    }
+
+    // Master BGM gain node
+    if (!this.bgmGain || this.bgmGain.context !== this.ctx) {
+      try {
+        this.bgmGain = this.ctx.createGain();
+        this.bgmGain.connect(this.ctx.destination);
+      } catch {
+        // Audio node creation fallback
+      }
+    }
+
+    if (this.bgmGain) {
+      try {
+        this.bgmGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.bgmGain.gain.setValueAtTime(this.bgmVolume, this.ctx.currentTime);
+      } catch {
+        this.bgmGain.gain.value = this.bgmVolume;
+      }
+    }
+
+    if (this.isBgmPlaying && this.timerId) {
+      return;
     }
 
     this.isBgmPlaying = true;
     this.currentStep = 0;
     this.nextNoteTime = this.ctx.currentTime + 0.05;
 
-    // Master BGM gain node
-    if (!this.bgmGain) {
-      this.bgmGain = this.ctx.createGain();
-      this.bgmGain.connect(this.ctx.destination);
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
     }
-    this.bgmGain.gain.setValueAtTime(this.bgmVolume, this.ctx.currentTime);
 
     // Lookahead scheduler loop (runs every 35ms, schedules ahead by 120ms)
     this.timerId = setInterval(() => {
@@ -73,19 +103,23 @@ class SoundEngine {
     this.notify();
   }
 
-  stopBgm() {
+  stopBgm(isUserAction = true) {
+    if (isUserAction) {
+      this.userMutedBgm = true;
+    }
     this.isBgmPlaying = false;
     if (this.timerId) {
       clearInterval(this.timerId);
       this.timerId = null;
     }
 
-    if (this.bgmGain && this.ctx) {
+    if (this.bgmGain && this.ctx && this.ctx.state !== 'closed') {
       try {
+        this.bgmGain.gain.cancelScheduledValues(this.ctx.currentTime);
         this.bgmGain.gain.setValueAtTime(this.bgmGain.gain.value, this.ctx.currentTime);
-        this.bgmGain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
+        this.bgmGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.08);
       } catch {
-        // Ignore ramp error
+        this.bgmGain.gain.value = 0.0001;
       }
     }
 
@@ -104,7 +138,7 @@ class SoundEngine {
 
   toggleBgm() {
     if (this.isBgmPlaying) {
-      this.stopBgm();
+      this.stopBgm(true);
     } else {
       this.startBgm();
     }
@@ -113,15 +147,30 @@ class SoundEngine {
 
   setBgmVolume(val) {
     this.bgmVolume = Math.max(0, Math.min(1, val));
-    if (this.bgmGain && this.ctx) {
-      this.bgmGain.gain.setValueAtTime(this.bgmVolume, this.ctx.currentTime);
+    if (this.bgmGain && this.ctx && this.ctx.state !== 'closed') {
+      try {
+        this.bgmGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.bgmGain.gain.setValueAtTime(this.bgmVolume, this.ctx.currentTime);
+      } catch {
+        this.bgmGain.gain.value = this.bgmVolume;
+      }
     }
     this.notify();
   }
 
   // 8-Bar Fun Instrumental Melody & Rhythm Pattern
   scheduleBgm() {
-    if (!this.ctx || !this.isBgmPlaying) return;
+    if (!this.ctx || !this.isBgmPlaying || this.ctx.state === 'closed') return;
+
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+      return;
+    }
+
+    // Recovery if audio was stalled or page came back from background
+    if (this.nextNoteTime < this.ctx.currentTime - 0.25) {
+      this.nextNoteTime = this.ctx.currentTime + 0.05;
+    }
 
     const secondsPerBeat = 60.0 / this.tempo;
     const stepDuration = secondsPerBeat / 2; // Eighth note step (0.245s)

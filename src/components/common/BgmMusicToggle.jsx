@@ -2,24 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Music } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import { useLanguage } from '../../hooks/useLanguage';
+import { useGame } from '../../hooks/useGame';
 
 export function BgmMusicToggle({ className = '', variant = 'compact' }) {
   const { language } = useLanguage();
   const isIndo = language === 'id';
+  const { state, toggleSound } = useGame();
 
   const [isPlaying, setIsPlaying] = useState(sound.isBgmPlaying);
 
   useEffect(() => {
     // Subscribe to sound engine state updates
-    const unsubscribe = sound.subscribe((state) => {
-      setIsPlaying(state.isBgmPlaying);
+    const unsubscribe = sound.subscribe((engineState) => {
+      setIsPlaying(engineState.isBgmPlaying);
     });
     return unsubscribe;
   }, []);
 
   const handleToggle = () => {
     sound.init();
-    sound.toggleBgm();
+    if (isPlaying) {
+      sound.stopBgm(true);
+    } else {
+      if (!state.soundEnabled) {
+        toggleSound(true);
+      }
+      sound.startBgm();
+    }
   };
 
   if (variant === 'pill') {

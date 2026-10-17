@@ -126,7 +126,7 @@ export const INITIAL_LEADERBOARD_ENTRIES = [
   {
     id: 'lead-12',
     name: 'Alya Marwah',
-    homegroup: 'Homegroup 11',
+    homegroup: 'Homegroup 17',
     avatarId: 'kiko',
     archetype: 'The Bridge Builder',
     totalScore: 810,

@@ -2,16 +2,22 @@ import React from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { useGame } from '../../hooks/useGame';
 import { useLanguage } from '../../hooks/useLanguage';
+import { sound } from '../../lib/sound';
 
 export function SoundToggle({ className = '' }) {
   const { state, toggleSound } = useGame();
   const { t } = useLanguage();
   const isMuted = !state.soundEnabled;
 
+  const handleToggle = () => {
+    sound.init();
+    toggleSound();
+  };
+
   return (
     <button
       type="button"
-      onClick={toggleSound}
+      onClick={handleToggle}
       title={isMuted ? t('common.soundOff') : t('common.soundOn')}
       className={`
         p-2 rounded-full bg-white/90 border border-amber-200/80 text-slate-600
